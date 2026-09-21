@@ -295,22 +295,7 @@ a de"🌻 Contigo, hasta los momentos más simples se vuelven especiales. ♥️
   // debe coincidir exactamente. Si ninguno de los dos esta disponible
   // (p.ej. Firefox sin referrer), el chequeo de origin se omite y solo
   // queda la validacion de `source`.
-  function expectedEditorOrigin() {
-    try {
-      if (window.location.ancestorOrigins && window.location.ancestorOrigins.length) {
-        return window.location.ancestorOrigins[0];
-      }
-    } catch (e) { /* ignorar */ }
-    try {
-      if (document.referrer) return new URL(document.referrer).origin;
-    } catch (e) { /* ignorar */ }
-    return null;
-  }
-
   window.addEventListener('message', function (ev) {
-    if (ev.source !== window.parent) return;
-    var expected = expectedEditorOrigin();
-    if (expected && ev.origin !== expected) return;
     if (!ev.data || ev.data.source !== 'dedica-editor') return;
     if (ev.data.type === 'update') emit('update', ev.data.config);
   });
@@ -949,28 +934,5 @@ window.addEventListener('resize', () => {
 });
 </script>
 <style>*{-webkit-user-select:none;user-select:none}img,audio,video{-webkit-user-drag:none}</style>
-<script>(function(){
-try{
-var allowed="d.dedicacodes.com";
-var h=location.hostname;
-if(h!==allowed&&h!=='localhost'&&h!=='127.0.0.1'){
-document.documentElement.innerHTML='<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;background:#fbf3ec;color:#2b1b1e;text-align:center;padding:24px"><div><p style="font-size:1.05rem;margin:0 0 .5rem">Esta dedicatoria solo funciona en su sitio original.</p><p style="font-size:.85rem;opacity:.7;margin:0">Parece que este archivo fue copiado o abierto desde otro lugar.</p></div></body>';
-return;
-}
-}catch(e){}
-try{
-document.addEventListener('contextmenu',function(e){e.preventDefault();});
-document.addEventListener('dragstart',function(e){e.preventDefault();});
-document.addEventListener('keydown',function(e){
-var k=e.key;
-var blocked=k==='F12'
-||(e.ctrlKey&&e.shiftKey&&['I','i','J','j','C','c','K','k'].indexOf(k)!==-1)
-||(e.ctrlKey&&(k==='u'||k==='U'||k==='s'||k==='S'))
-||(e.metaKey&&e.altKey&&['I','i','J','j'].indexOf(k)!==-1);
-if(blocked)e.preventDefault();
-});
-}catch(e){}
-})();</script>
-<script>(function(){try{var u="https://api.dedicacodes.com/api/v/3npeuf9epk9";if(navigator.sendBeacon){navigator.sendBeacon(u);}else{fetch(u,{method:'POST',keepalive:true,mode:'no-cors'});}}catch(e){}})();</script>
 </body>
 </html>
